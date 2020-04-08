@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import BookSearch from './components/BookSearch'
+import BookCard from './components/BookCard'
 import Book from './utils/Book'
 import axios from 'axios'
 
@@ -7,15 +9,48 @@ const App = () => {
 
   const [bookState, setBookState] = useState({
     books: [],
-    searchText: ''
-
+    searchText: '',
+    title: '',
+    authors: '',
+    description: '',
+    image: '',
+    link: ''
   })
 
   const handleInputChange = ({ target }) => {
     setBookState({ ...bookState, [target.name]: target.value })
   }
 
-  // const handleCreateBook = event => {
+  const handleSearchBook = () => {
+    // event.preventDefault()
+    axios.get(`https://www.googleapis.com/books/v1/volumes?q=intitle:${bookState.searchText}&key=AIzaSyDf5OkyrX7Z1npFLoWsNAd_1h-FbfqGPZU&country=us`)
+      .then(({ data: book }) => {
+        console.log(book)
+      })
+  }
+
+  useEffect(() => {
+    Book.read()
+      .then(({ data: books }) => {
+        setBookState({ ...bookState, books })
+      })
+  }, [])
+
+  return (
+    <div>
+      <BookSearch
+        bookState={bookState}
+        handleSearchBook={handleSearchBook}
+        handleInputChange={handleInputChange}
+      />
+      <BookCard />
+
+    </div>
+  )
+}
+
+export default App
+// const handleCreateBook = event => {
   //   console.log(event)
   //   event.preventDefault()
   //   Item.create({
@@ -50,20 +85,3 @@ const App = () => {
   //       setItemState({ ...itemState, items })
   //     })
   // }
-
-  useEffect(() => {
-    Book.read()
-      .then(({ data: books }) => {
-        setBookState({ ...bookState, books })
-      })
-  }, [])
-
-  return (
-    <div>
-
-      
-    </div>
-  )
-}
-
-export default App
