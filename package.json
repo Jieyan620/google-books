@@ -24,6 +24,8 @@
   },
   "homepage": "https://github.com/QFults/fullapp#readme",
   "dependencies": {
+    "@material-ui/core": "^4.9.11",
+    "@material-ui/icons": "^4.9.1",
     "axios": "^0.19.2",
     "concurrently": "^5.1.0",
     "dotenv": "^8.2.0",

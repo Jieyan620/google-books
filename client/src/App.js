@@ -21,20 +21,23 @@ const App = () => {
     setBookState({ ...bookState, [target.name]: target.value })
   }
 
-  const handleSearchBook = () => {
-    // event.preventDefault()
-    axios.get(`https://www.googleapis.com/books/v1/volumes?q=intitle:${bookState.searchText}&key=AIzaSyDf5OkyrX7Z1npFLoWsNAd_1h-FbfqGPZU&country=us`)
-      .then(({ data: book }) => {
-        console.log(book)
+  const handleSearchBook = (event) => {
+    event.preventDefault()
+    axios.get(`https://www.googleapis.com/books/v1/volumes?q=${bookState.searchText}&key=AIzaSyDf5OkyrX7Z1npFLoWsNAd_1h-FbfqGPZU`)
+      .then(({ data: bookInfos }) => {
+        // console.log(bookInfos)
+        let books= bookInfos.items
+        console.log(books)
+        setBookState({books})
       })
   }
 
-  useEffect(() => {
-    Book.read()
-      .then(({ data: books }) => {
-        setBookState({ ...bookState, books })
-      })
-  }, [])
+  // useEffect(() => {
+  //   Book.read()
+  //     .then(({ data: books }) => {
+  //       setBookState({ ...bookState, books })
+  //     })
+  // }, [])
 
   return (
     <div>
@@ -43,7 +46,12 @@ const App = () => {
         handleSearchBook={handleSearchBook}
         handleInputChange={handleInputChange}
       />
-      <BookCard />
+      
+       <BookCard
+        bookState={bookState}
+      />
+    
+      
 
     </div>
   )
