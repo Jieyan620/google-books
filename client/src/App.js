@@ -21,7 +21,7 @@ const App = () => {
   // 在拿到数据后直接精简成所需的数据结构
   const handleSearchBook = (event) => {
     event.preventDefault()
-    axios.get(`https://www.googleapis.com/books/v1/volumes?q=${bookState.searchText}&key=AIzaSyDf5OkyrX7Z1npFLoWsNAd_1h-FbfqGPZU`)
+    axios.get(`https://www.googleapis.com/books/v1/volumes?q=${bookState.searchText}&key=${process.env.EmailPassword}`)
       .then(({ data: bookInfos }) => {
         // console.log(bookInfos)
         let books = []
