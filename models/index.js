@@ -1,3 +1,3 @@
 module.exports = {
-  Item: require('./Book.js')
+  Book: require('./Book.js')
 }

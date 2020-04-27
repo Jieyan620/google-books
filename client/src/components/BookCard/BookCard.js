@@ -1,108 +1,65 @@
 import React, { useState } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import clsx from 'clsx'
-import Card from '@material-ui/core/Card'
-import CardHeader from '@material-ui/core/CardHeader'
-import CardMedia from '@material-ui/core/CardMedia'
-import CardContent from '@material-ui/core/CardContent'
-import CardActions from '@material-ui/core/CardActions'
-import Collapse from '@material-ui/core/Collapse'
-import Avatar from '@material-ui/core/Avatar'
-import IconButton from '@material-ui/core/IconButton'
-import Typography from '@material-ui/core/Typography'
-import { red } from '@material-ui/core/colors'
-import FavoriteIcon from '@material-ui/icons/Favorite'
-import ShareIcon from '@material-ui/icons/Share'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import MoreVertIcon from '@material-ui/icons/MoreVert'
-
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: 345,
-  },
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-  },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },
-  avatar: {
-    backgroundColor: red[500],
-  },
-}))
 
 const BookCard = (props) => {
 
-  const classes = useStyles()
-  const [expanded, setExpanded] = React.useState(false)
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded)
-  };
   return (
     <div>
       {props.bookState.books ?
         props.bookState.books.map(
           (book, i) => (
-            <Card className={classes.root} key={i}>
-              <CardHeader
-                avatar={
-                  <Avatar aria-label="recipe" className={classes.avatar}>
-                    {book.volumeInfo.title[0]}
-                  </Avatar>
-                }
-                action={
-                  <IconButton aria-label="settings">
-                    <MoreVertIcon />
-                  </IconButton>
-                }
-                title={book.volumeInfo.title}
-                subheader={book.volumeInfo.authors}
-              />
-              <CardMedia
-                className={classes.media}
-                image={book.volumeInfo.imageLinks.smallThumbnail}
-                title="image"
-              />
-              <CardContent>
-                <Typography variant="body2" color="textSecondary" component="p">
-                  Published Date: {book.volumeInfo.publishedDate}
-                </Typography>
-                {book.volumeInfo.publisher ? (<Typography variant="body2" color="textSecondary" component="p">Publisher: {book.volumeInfo.publisher}</Typography>) : null}
-                <Typography variant="body2" color="textSecondary" component="p">
-                  Page Count: {book.volumeInfo.pageCount}
-                </Typography>
-              </CardContent>
-              <CardActions disableSpacing>
-                <button>add to list</button>
-                <IconButton
-                  className={clsx(classes.expand, {
-                    [classes.expandOpen]: expanded,
-                  })}
-                  onClick={handleExpandClick}
-                  aria-expanded={expanded}
-                  aria-label="show more"
-                >
-                  <ExpandMoreIcon />
-                </IconButton>
-              </CardActions>
-              <Collapse in={expanded} timeout="auto" unmountOnExit>
-                <CardContent>
-                  {book.volumeInfo.description ? (<Typography paragraph>{book.volumeInfo.description}</Typography>):"No Description"}
-                  
-                </CardContent>
-              </Collapse>
-            </Card>
-
+            <div className="card" key={i}>
+              <img src={book.image} className="card-img-top" alt="bookImg"></img>
+              <div className="card-body">
+                <h5 className="card-title">{book.title}</h5>
+              </div>
+              <ul
+                 className="list-group list-group-flush">
+                <li
+                  className="list-group-item">
+                  Authors: {book.authors}
+                </li>
+                <li
+                   className="list-group-item">
+                   Published Date: {book.publishedDate}
+                </li>
+                {book.publisher ? (
+                <li
+                   className="list-group-item">
+                   Publisher: {book.publisher}
+                </li>) : null}
+                <li
+                   className="list-group-item">
+                   Page Count: {book.pageCount}
+                </li>
+              
+                <li className="list-group-item">
+                  <button 
+                     className="btn btn-primary" 
+                     type="button" 
+                     data-toggle="collapse" 
+                     data-target={"#"+`collapseExample${i}`} aria-expanded="false" 
+                     aria-controls={`collapseExample${i}`}>
+                    Description
+                  </button>
+                  <button
+                      className="btn btn-primary"
+                      type="button" 
+                      value={book.gId}
+                      onClick={()=>{props.handleCreateBook(book)}} >
+                    Add to List
+                  </button>
+                </li>
+                <div 
+                  className="collapse" 
+                  id={`collapseExample${i}`}>
+                  {book.description ? (
+                    <div 
+                     className="card card-body">
+                     {book.description}
+                    </div>) : "No Description"}
+                </div>
+              </ul>
+            </div>
           )
         ) : null}
 
