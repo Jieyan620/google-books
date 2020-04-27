@@ -1,0 +1,12 @@
+.container{
+font-family: "Bitter", sans-serif;
+}
+
+
+.jmubotron{
+  background-color: rgb(70, 78, 182);
+  color: rgb(248, 245, 240);
+  padding: 10px;
+  justify-items: center;
+  margin-bottom: 10px;
+}

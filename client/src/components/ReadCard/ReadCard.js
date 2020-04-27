@@ -8,38 +8,19 @@ const ReadCard = (props) => {
         props.bookState.readList.map(
           (book, i) => (
             <div className="card" key={i}>
-              <img src={book.image} className="card-img-top" alt="bookImg"></img>
-              <div className="card-body">
-                <h5 className="card-title">{book.title}</h5>
-              </div>
               <ul
                 className="list-group list-group-flush">
-                <li
-                  className="list-group-item">
-                  Authors: {book.authors}
+                <li className="list-group-item">
+                  <h5 className="card-title">{book.title}</h5>
                 </li>
-                <li
-                  className="list-group-item">
-                  Published Date: {book.publishedDate}
-                </li>
-                {book.publisher ? (
-                  <li
-                    className="list-group-item">
-                    Publisher: {book.publisher}
-                  </li>) : null}
-                <li
-                  className="list-group-item">
-                  Page Count: {book.pageCount}
-                </li>
-
                 <li className="list-group-item">
                   <button
                     className="btn btn-primary"
                     type="button"
                     data-toggle="collapse"
-                    data-target={"#" + `collapseExample${i}`} aria-expanded="false"
-                    aria-controls={`collapseExample${i}`}>
-                    Description
+                    data-target={"#" + `collapseExample${book._id}`} aria-expanded="false"
+                    aria-controls={`collapseExample${book._id}`}>
+                    Info
                   </button>
                   <button
                     className="btn btn-primary"
@@ -50,14 +31,37 @@ const ReadCard = (props) => {
                     Delete
                   </button>
                 </li>
+                
                 <div
                   className="collapse"
-                  id={`collapseExample${i}`}>
+                  id={`collapseExample${book._id}`}>
+                  <ul
+                    className="list-group list-group-flush">
+                    <img src={book.image} className="card-img-top" alt="bookImg"></img>
+                    <li
+                      className="list-group-item">
+                      Authors: {book.authors}
+                    </li>
+                    <li
+                      className="list-group-item">
+                      Published Date: {book.publishedDate}
+                    </li>
+                    {book.publisher ? (
+                      <li
+                        className="list-group-item">
+                        Publisher: {book.publisher}
+                      </li>) : null}
+                    <li
+                      className="list-group-item">
+                      Page Count: {book.pageCount}
+                    </li>
+                  </ul>
                   {book.description ? (
                     <div
-                      className="card card-body">
+                      className="list-group-item">
                       {book.description}
-                    </div>) : "No Description"}
+                    </div>) : <div
+                      className="list-group-item">No Description</div>}
                 </div>
               </ul>
             </div>

@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React from 'react'
+import './BookCard.css'
 
 const BookCard = (props) => {
 
@@ -53,10 +54,11 @@ const BookCard = (props) => {
                   className="collapse" 
                   id={`collapseExample${i}`}>
                   {book.description ? (
-                    <div 
-                     className="card card-body">
-                     {book.description}
-                    </div>) : "No Description"}
+                    <div
+                      className="list-group-item">
+                      {book.description}
+                    </div>) : <div
+                      className="list-group-item">No Description</div>}
                 </div>
               </ul>
             </div>

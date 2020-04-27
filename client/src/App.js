@@ -4,7 +4,7 @@ import BookCard from './components/BookCard'
 import ReadCard from './components/ReadCard'
 import Book from './utils/Book'
 import axios from 'axios'
-
+import './App.css'
 
 const App = () => {
 
@@ -52,7 +52,7 @@ const App = () => {
       })
   }
 
-  // need to get the value from button, not use axios
+  
   const handleCreateBook = (book) => {
     // console.log(book)
     Book.create({
@@ -68,6 +68,7 @@ const App = () => {
       .then(({ data: book }) => {
         let readList = JSON.parse(JSON.stringify(bookState.readList))
         let newBook = {
+          _id: book._id,
           gId: book.id,
           title: book.title,
           authors: book.authors,
@@ -105,9 +106,9 @@ const App = () => {
     <div className="container">
       <div className="row">
         <div className="col-md-12">
-          <div className="jumbotron">
+          <div className="jmubotron">
             <h1 className="display-4">YourBook App</h1>
-            <p className="lead">Search for your favorite book and add them to a Readlist</p>
+            <p className="lead">Search for your book Info and add them to your booklist, manage all of your books.</p>
           </div>
         </div>
       </div>
@@ -128,7 +129,7 @@ const App = () => {
             ) : null}
         </div>
         <div className="col-md-6">
-          <h4>Your Watchlist</h4>
+          <h4>Your Booklist</h4>
           <ReadCard
             bookState={bookState}
             handleDeleteBook={handleDeleteBook}
